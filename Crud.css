@@ -1,0 +1,14 @@
+body{
+    background: #ae2323;
+}
+*{
+    color: #1b1b1b;
+}
+
+#btnUpdate{
+    display: none;
+}
+
+tr{
+    background-color: yellowgreen;
+}
