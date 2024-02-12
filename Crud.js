@@ -112,3 +112,68 @@ function AddData(){
         document.getElementById('inputDate').value = "";
     }
 }
+/*delete */
+function deleteData(index){
+
+    var listPeople;
+    if (localStorage.getItem('listPeople') == null) {
+        listPeople = [];
+    }else{
+        listPeople = JSON.parse(localStorage.getItem("listPeople"));
+    }
+
+    listPeople.splice(index, 1);
+    localStorage.setItem('listPeople', JSON.stringify(listPeople));
+    showData();
+}
+
+/*update */
+
+function updateData(index){
+    document.getElementById("btnAdd").style.display = 'none';
+    document.getElementById("btnUpdate",btnAdd).style.display = 'block';
+
+    var listPeople;
+    if (localStorage.getItem('listPeople') == null) {
+        listPeople = [];
+    }else{
+        listPeople = JSON.parse(localStorage.getItem("listPeople"));
+    }
+
+    
+    document.getElementById('inputIdProducto').value = listPeople[index].IdProducto;
+    document.getElementById('inputNombre').value = listPeople[index].Nombre;
+    document.getElementById('inputCategoria').value = listPeople[index].Categoria;
+    document.getElementById('inputPrecio').value = listPeople[index].Precio;
+    document.getElementById('inputDescripcion').value = listPeople[index].Descripcion;
+    document.getElementById('inputDate').value = listPeople[index].Date;
+
+    document.querySelector("#btnUpdate").onclick = function(){
+        if (validateForm() == true) {
+            
+            listPeople[index].IdProducto = document.getElementById('inputIdProducto').value;
+            listPeople[index].Nombre = document.getElementById('inputNombre').value;
+            listPeople[index].Categoria = document.getElementById('inputCategoria').value;
+            listPeople[index].Precio = document.getElementById('inputPrecio').value;
+            listPeople[index].Descripcion = document.getElementById('inputDescripcion').value;
+            listPeople[index].Date = document.getElementById('inputDate').value;
+         
+
+            localStorage.setItem('listPeople', JSON.stringify(listPeople));
+            showData();
+
+            
+            document.getElementById('inputName').value = "";
+            document.getElementById('inputDate').value = "";
+            document.getElementById('inputIdProducto').value = "";
+            document.getElementById('inputNombre').value = "";
+            document.getElementById('inputCategoria').value = "";
+            document.getElementById('inputPrecio').value = "";
+            document.getElementById('inputDescripcion').value = "";
+            document.getElementById('inputDate').value = "";
+
+            document.getElementById("btnAdd").style.display = 'block';
+            document.getElementById("btnUpdate",btnAdd).style.display = 'none';
+        }
+    };
+}
