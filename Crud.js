@@ -59,7 +59,7 @@ function showData(){
         html += '<td class="col-md-2">' + element.Categoria + '</td>';
         html += '<td class="col-md-2">' + element.Precio + '</td>';
         html += '<td class="col-md-3">' + element.Descripcion + '</td>';
-      
+        html += '<td class="col-md-2"><img src="' + element.Imagen + '" alt="Imagen del producto"></td>'; // Muestra la imagen
         html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i></button></td>';
         html += "</tr>";
     });
@@ -78,6 +78,7 @@ function AddData(){
         let Categoria = document.getElementById('inputCategoria').value;
         let Precio = document.getElementById('inputPrecio').value;
         let Descripcion = document.getElementById('inputDescripcion').value;
+        let Imagen = document.getElementById('inputImagen').value;
        
 
         var listPeople;
@@ -94,7 +95,7 @@ function AddData(){
             Categoria: Categoria,
             Precio: Precio,
             Descripcion: Descripcion,
-            
+            Imagen: Imagen, // Guarda la URL de la imagen
         });
 
         localStorage.setItem('listPeople', JSON.stringify(listPeople));
@@ -106,6 +107,7 @@ function AddData(){
         document.getElementById('inputCategoria').value = "";
         document.getElementById('inputPrecio').value = "";
         document.getElementById('inputDescripcion').value = "";
+        document.getElementById('inputImagen').value = ""; // Limpia el campo de la imagen
         
     }
 }
