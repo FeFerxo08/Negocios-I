@@ -6,7 +6,7 @@ function validateForm(){
     let Categoria = document.getElementById('inputCategoria').value;
     let Precio = document.getElementById('inputPrecio').value;
     let Descripcion = document.getElementById('inputDescripcion').value;
-    let Date = document.getElementById('inputDate').value;
+
 
     if (IdProducto == "") {
         alert('El Id Producto es requerido');
@@ -33,10 +33,7 @@ function validateForm(){
         return false;
     }
 
-    if (Date == "") {
-        alert('La Fecha es requerida');
-        return false;
-    }
+   
 
     return true;
 }
@@ -62,7 +59,7 @@ function showData(){
         html += '<td class="col-md-2">' + element.Categoria + '</td>';
         html += '<td class="col-md-2">' + element.Precio + '</td>';
         html += '<td class="col-md-3">' + element.Descripcion + '</td>';
-        html += '<td class="col-md-2">' + element.Date + '</td>';
+      
         html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i></button></td>';
         html += "</tr>";
     });
@@ -81,7 +78,7 @@ function AddData(){
         let Categoria = document.getElementById('inputCategoria').value;
         let Precio = document.getElementById('inputPrecio').value;
         let Descripcion = document.getElementById('inputDescripcion').value;
-        let Date = document.getElementById('inputDate').value;
+       
 
         var listPeople;
 
@@ -97,7 +94,7 @@ function AddData(){
             Categoria: Categoria,
             Precio: Precio,
             Descripcion: Descripcion,
-            Date: Date
+            
         });
 
         localStorage.setItem('listPeople', JSON.stringify(listPeople));
@@ -109,7 +106,7 @@ function AddData(){
         document.getElementById('inputCategoria').value = "";
         document.getElementById('inputPrecio').value = "";
         document.getElementById('inputDescripcion').value = "";
-        document.getElementById('inputDate').value = "";
+        
     }
 }
 /*delete */
@@ -146,7 +143,7 @@ function updateData(index){
     document.getElementById('inputCategoria').value = listPeople[index].Categoria;
     document.getElementById('inputPrecio').value = listPeople[index].Precio;
     document.getElementById('inputDescripcion').value = listPeople[index].Descripcion;
-    document.getElementById('inputDate').value = listPeople[index].Date;
+ 
 
     document.querySelector("#btnUpdate").onclick = function(){
         if (validateForm() == true) {
@@ -156,7 +153,7 @@ function updateData(index){
             listPeople[index].Categoria = document.getElementById('inputCategoria').value;
             listPeople[index].Precio = document.getElementById('inputPrecio').value;
             listPeople[index].Descripcion = document.getElementById('inputDescripcion').value;
-            listPeople[index].Date = document.getElementById('inputDate').value;
+           
          
 
             localStorage.setItem('listPeople', JSON.stringify(listPeople));
@@ -170,7 +167,7 @@ function updateData(index){
             document.getElementById('inputCategoria').value = "";
             document.getElementById('inputPrecio').value = "";
             document.getElementById('inputDescripcion').value = "";
-            document.getElementById('inputDate').value = "";
+          
 
             document.getElementById("btnAdd").style.display = 'block';
             document.getElementById("btnUpdate",btnAdd).style.display = 'none';
