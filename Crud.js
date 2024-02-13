@@ -57,9 +57,9 @@ function showData(){
         html += '<td class="col-md-1">' + element.IdProducto + '</td>';
         html += '<td class="col-md-1">' + element.Nombre + '</td>';
         html += '<td class="col-md-1">' + element.Categoria + '</td>';
-        html += '<td class="col-md-1">' + element.Precio + '</td>';
-        html += '<td class="col-md-2">' + element.Descripcion + '</td>';
-        html += '<td class="col-md-3"><img src="' + element.Imagen + '" alt="Imagen del producto" style="width: 100%; height: auto;"></td>';
+        html += '<td class="col-md-2">' + element.Precio + '</td>';
+        html += '<td class="col-md-3">' + element.Descripcion + '</td>';
+        html += '<td class="col-md-2 text-center"><img src="' + element.Imagen + '" alt="Imagen del producto" style="width: 90px; height: auto;"></td>'; // Muestra la imagen
         html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-danger"><i class="bi bi-x-lg text-danger"></i></button></td>';
         html += "</tr>";
     });
@@ -78,37 +78,48 @@ function AddData(){
         let Categoria = document.getElementById('inputCategoria').value;
         let Precio = document.getElementById('inputPrecio').value;
         let Descripcion = document.getElementById('inputDescripcion').value;
-        let Imagen = document.getElementById('inputImagen').value;
-       
-
-        var listPeople;
-
-        if (localStorage.getItem('listPeople') == null) {
-            listPeople = [];
-        } else {
-            listPeople = JSON.parse(localStorage.getItem("listPeople"));
-        }
-
-        listPeople.push({
-            IdProducto: IdProducto,
-            Nombre: Nombre,
-            Categoria: Categoria,
-            Precio: Precio,
-            Descripcion: Descripcion,
-            Imagen: Imagen, // Guarda la URL de la imagen
-        });
-
-        localStorage.setItem('listPeople', JSON.stringify(listPeople));
-
-        showData();
-
-        document.getElementById('inputIdProducto').value = "";
-        document.getElementById('inputNombre').value = "";
-        document.getElementById('inputCategoria').value = "";
-        document.getElementById('inputPrecio').value = "";
-        document.getElementById('inputDescripcion').value = "";
-        document.getElementById('inputImagen').value = ""; // Limpia el campo de la imagen
+        let ImagenInput = document.getElementById('inputImagen');
         
+        let Imagen = "";
+
+        if (ImagenInput.files.length > 0) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                Imagen = e.target.result;
+
+                var listPeople;
+
+                if (localStorage.getItem('listPeople') == null) {
+                    listPeople = [];
+                } else {
+                    listPeople = JSON.parse(localStorage.getItem("listPeople"));
+                }
+
+                listPeople.push({
+                    IdProducto: IdProducto,
+                    Nombre: Nombre,
+                    Categoria: Categoria,
+                    Precio: Precio,
+                    Descripcion: Descripcion,
+                    Imagen: Imagen, // Guarda la URL de la imagen
+                });
+
+                localStorage.setItem('listPeople', JSON.stringify(listPeople));
+
+                showData();
+
+                document.getElementById('inputIdProducto').value = "";
+                document.getElementById('inputNombre').value = "";
+                document.getElementById('inputCategoria').value = "";
+                document.getElementById('inputPrecio').value = "";
+                document.getElementById('inputDescripcion').value = "";
+                document.getElementById('inputImagen').value = ""; // Limpia el campo de la imagen
+            };
+            reader.readAsDataURL(ImagenInput.files[0]);
+        } else {
+            // Si no se seleccionó un archivo, guarda sin imagen
+            alert('La Imagen es requerida');
+        }
     }
 }
 /*delete */
