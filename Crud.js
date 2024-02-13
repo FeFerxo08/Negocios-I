@@ -53,14 +53,14 @@ function showData(){
 
     listPeople.forEach(function(element, index){
         html += "<tr>";
-        html += '<td class="col-md-1"; style="text-align: center"><button onclick="updateData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-pencil-square"></i></i></button></td>';
+        html += '<td class="col-md-1"; style="text-align: center "><button onclick="updateData(' + index + ') " class="btn btn-outline-primary"><i class="bi bi-pencil-square text-primary" ></i></i></button></td>';
         html += '<td class="col-md-1">' + element.IdProducto + '</td>';
         html += '<td class="col-md-2">' + element.Nombre + '</td>';
         html += '<td class="col-md-2">' + element.Categoria + '</td>';
         html += '<td class="col-md-2">' + element.Precio + '</td>';
         html += '<td class="col-md-3">' + element.Descripcion + '</td>';
         html += '<td class="col-md-2"><img src="' + element.Imagen + '" alt="Imagen del producto"></td>'; // Muestra la imagen
-        html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i></button></td>';
+        html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-danger"><i class="bi bi-x-lg text-danger"></i></button></td>';
         html += "</tr>";
     });
 
