@@ -55,11 +55,11 @@ function showData(){
         html += "<tr>";
         html += '<td class="col-md-1"; style="text-align: center "><button onclick="updateData(' + index + ') " class="btn btn-outline-primary"><i class="bi bi-pencil-square text-primary" ></i></i></button></td>';
         html += '<td class="col-md-1">' + element.IdProducto + '</td>';
-        html += '<td class="col-md-2">' + element.Nombre + '</td>';
-        html += '<td class="col-md-2">' + element.Categoria + '</td>';
-        html += '<td class="col-md-2">' + element.Precio + '</td>';
-        html += '<td class="col-md-3">' + element.Descripcion + '</td>';
-        html += '<td class="col-md-2"><img src="' + element.Imagen + '" alt="Imagen del producto"></td>'; // Muestra la imagen
+        html += '<td class="col-md-1">' + element.Nombre + '</td>';
+        html += '<td class="col-md-1">' + element.Categoria + '</td>';
+        html += '<td class="col-md-1">' + element.Precio + '</td>';
+        html += '<td class="col-md-2">' + element.Descripcion + '</td>';
+        html += '<td class="col-md-3"><img src="' + element.Imagen + '" alt="Imagen del producto" style="max-width:100%; max-height:100px;"></td>'; // Muestra la imagen
         html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-danger"><i class="bi bi-x-lg text-danger"></i></button></td>';
         html += "</tr>";
     });
