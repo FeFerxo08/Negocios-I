@@ -1,5 +1,5 @@
 body{
-    background: #ae2323;
+    background: #6da5c0;
 }
 *{
     color: #1b1b1b;
@@ -10,9 +10,16 @@ body{
 }
 
 .encabezado{
-    background-color: yellowgreen;
+    background-color: #0f969c;
+    border-color: #294d61;
 }
 
 tr{
     background-color: white;
+}
+.card-header{
+    background-color: #294d61;
+}
+#btnAdd{
+    background-color:#294d61;
 }
