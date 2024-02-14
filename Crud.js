@@ -6,6 +6,7 @@ function validateForm(){
     let Categoria = document.getElementById('inputCategoria').value;
     let Precio = document.getElementById('inputPrecio').value;
     let Descripcion = document.getElementById('inputDescripcion').value;
+    let Date = document.getElementById('inputDate').value;
 
 
     if (IdProducto == "") {
@@ -33,6 +34,10 @@ function validateForm(){
         return false;
     }
 
+    if (Date == "") {
+        alert('La Fecha es requerida');
+        return false;
+    }
    
 
     return true;
@@ -57,9 +62,10 @@ function showData(){
         html += '<td class="col-md-1">' + element.IdProducto + '</td>';
         html += '<td class="col-md-1">' + element.Nombre + '</td>';
         html += '<td class="col-md-1">' + element.Categoria + '</td>';
-        html += '<td class="col-md-2">' + element.Precio + '</td>';
-        html += '<td class="col-md-3">' + element.Descripcion + '</td>';
+        html += '<td class="col-md-1">' + element.Precio + '</td>';
+        html += '<td class="col-md-4">' + element.Descripcion + '</td>';
         html += '<td class="col-md-2 text-center"><img src="' + element.Imagen + '" alt="Imagen del producto" style="width: 90px; height: auto;"></td>'; // Muestra la imagen
+        html += '<td class="col-md-1">' + element.Date + '</td>';
         html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-danger"><i class="bi bi-x-lg text-danger"></i></button></td>';
         html += "</tr>";
     });
@@ -78,6 +84,7 @@ function AddData(){
         let Categoria = document.getElementById('inputCategoria').value;
         let Precio = document.getElementById('inputPrecio').value;
         let Descripcion = document.getElementById('inputDescripcion').value;
+        let Date = document.getElementById('inputDate').value;
         let ImagenInput = document.getElementById('inputImagen');
         
         let Imagen = "";
@@ -102,6 +109,7 @@ function AddData(){
                     Precio: Precio,
                     Descripcion: Descripcion,
                     Imagen: Imagen, // Guarda la URL de la imagen
+                    Date: Date
                 });
 
                 localStorage.setItem('listPeople', JSON.stringify(listPeople));
@@ -113,7 +121,9 @@ function AddData(){
                 document.getElementById('inputCategoria').value = "";
                 document.getElementById('inputPrecio').value = "";
                 document.getElementById('inputDescripcion').value = "";
+                document.getElementById('inputDate').value = "";
                 document.getElementById('inputImagen').value = ""; // Limpia el campo de la imagen
+                
             };
             reader.readAsDataURL(ImagenInput.files[0]);
         } else {
@@ -156,6 +166,7 @@ function updateData(index){
     document.getElementById('inputCategoria').value = listPeople[index].Categoria;
     document.getElementById('inputPrecio').value = listPeople[index].Precio;
     document.getElementById('inputDescripcion').value = listPeople[index].Descripcion;
+    document.getElementById('inputDate').value = listPeople[index].Date;
  
 
     document.querySelector("#btnUpdate").onclick = function(){
@@ -166,6 +177,7 @@ function updateData(index){
             listPeople[index].Categoria = document.getElementById('inputCategoria').value;
             listPeople[index].Precio = document.getElementById('inputPrecio').value;
             listPeople[index].Descripcion = document.getElementById('inputDescripcion').value;
+            listPeople[index].Date = document.getElementById('inputDate').value;
            
          
 
@@ -180,6 +192,7 @@ function updateData(index){
             document.getElementById('inputCategoria').value = "";
             document.getElementById('inputPrecio').value = "";
             document.getElementById('inputDescripcion').value = "";
+            document.getElementById('inputDate').value = "";
           
 
             document.getElementById("btnAdd").style.display = 'block';

@@ -17,7 +17,7 @@
   <br>
     
   <div class="row justify-content-md-center">
-    <div class="col-md-7">
+    <div class="col-md-8">
       
       <table class="table table-striped table-bordered" id="tableData">
         <thead>
@@ -29,6 +29,7 @@
             <th scope="col">Precio</th>
             <th scope="col">Descripción</th>
             <th scope="col">Imagen</th>
+            <th scope="col">Fecha de introducción</th>
             <th scope="col">Borrar</th>
           </tr>
         </thead>
@@ -36,7 +37,7 @@
         </tbody>
       </table>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="card">
         <div class="row"></div>
           <div class="card-header text-white">
@@ -60,7 +61,9 @@
           <br>
           <b>Imagen</b>
             <input type="file" class="form-control" id="inputImagen">
-         
+            <br>
+            <b>Fecha de introducción</b>
+            <input type="date" class="form-control" id="inputDate">
           </div>
           <div class="card-footer">              
             <button type="submit" class="btn btn-primary" id="btnAdd" onclick="AddData()">Agregar</button>
