@@ -29,7 +29,7 @@
             </div>
             <div class="mb-3">
                 <label for="imagen" class="form-label">Imagen</label>
-                <input type="file" class="form-control" id="imagen">
+                <input type="file" class="form-control" id="imagen" accept="image/*">
             </div>
             <button type="button" class="btn btn-primary" onclick="agregarFila()">Agregar</button>
         </form>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="imagenEditar" class="form-label">Imagen</label>
-                            <input type="file" class="form-control" id="imagenEditar">
+                            <input type="file" class="form-control" id="imagenEditar" accept="image/*">
                         </div>
                     </form>
                 </div>
@@ -95,10 +95,8 @@
         </div>
     </div>
 
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
-
+    <script src="js/bootstrap.min.js"></script>
     <script>
         var filaId = 1; // Identificador de fila inicial
         var productosExistentes = {}; // Objeto para almacenar productos existentes
@@ -109,10 +107,12 @@
             var descripcion = document.getElementById("descripcion").value;
             var precio = document.getElementById("precio").value;
             var fecha = document.getElementById("fecha").value;
-            var imagen = document.getElementById("imagen").value; // Aquí puedes manejar el archivo de imagen como desees
+            var imagenInput = document.getElementById("imagen");
+            var imagenFile = imagenInput.files[0]; // Obtener el primer archivo seleccionado
+            var imagenURL = URL.createObjectURL(imagenFile); // Crear una URL local para el archivo de imagen
 
             // Validar si ambos campos están llenos
-            if (nombreProducto === "" || descripcion === "" || precio === "" || fecha === "") {
+            if (nombreProducto === "" || descripcion === "" || precio === "" || fecha === "" || !imagenFile) {
                 alert("Por favor, completa todos los campos para agregar el producto.");
                 return;
             }
@@ -145,7 +145,7 @@
             cellDescripcion.innerHTML = descripcion;
             cellPrecio.innerHTML = precio;
             cellFecha.innerHTML = fecha;
-            cellImagen.innerHTML = '<img src="' + imagen + '" alt="Imagen del producto">';
+            cellImagen.innerHTML = '<img src="' + imagenURL + '" alt="Imagen del producto">';
             cellBorrar.innerHTML = '<button class="btn btn-danger" onclick="eliminarFila(' + filaId + ')">Borrar</button>';
 
             // Incrementar el identificador de fila
@@ -171,14 +171,15 @@
             var descripcion = fila.cells[2].innerHTML;
             var precio = fila.cells[3].innerHTML;
             var fecha = fila.cells[4].innerHTML;
-            var imagen = fila.cells[5].innerHTML; // Aquí puedes manejar la imagen como desees
+            var imagen = fila.cells[5].querySelector('img').getAttribute('src'); // Obtener la URL de la imagen
 
             // Llenar el modal de edición con los valores de la fila
             document.getElementById("nombreProductoEditar").value = nombreProducto;
             document.getElementById("descripcionEditar").value = descripcion;
             document.getElementById("precioEditar").value = precio;
             document.getElementById("fechaEditar").value = fecha;
-            // Puedes manejar la imagen de manera diferente, como cargar la imagen actual o permitir cargar una nueva
+            // Establecer la imagen en el modal de edición
+            document.getElementById("imagenEditar").setAttribute('src', imagen);
 
             // Establecer el atributo data-fila-id en el modal
             document.getElementById("editarModal").setAttribute("data-fila-id", id);
@@ -194,7 +195,7 @@
             var descripcionEditar = document.getElementById("descripcionEditar").value;
             var precioEditar = document.getElementById("precioEditar").value;
             var fechaEditar = document.getElementById("fechaEditar").value;
-            // Puedes manejar la imagen editada de manera diferente, como cargar la imagen actual o permitir cargar una nueva
+            var imagenEditar = document.getElementById("imagenEditar").getAttribute('src');
 
             // Obtener el data-fila-id del modal
             var filaId = document.getElementById("editarModal").getAttribute("data-fila-id");
@@ -205,7 +206,7 @@
             fila.cells[2].innerHTML = descripcionEditar;
             fila.cells[3].innerHTML = precioEditar;
             fila.cells[4].innerHTML = fechaEditar;
-            // Puedes manejar la imagen actualizada de manera diferente
+            fila.cells[5].innerHTML = '<img src="' + imagenEditar + '" alt="Imagen del producto">';
 
             // Cerrar el modal de edición
             var editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
