@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <h1>Información del Producto</h1>
+        <form>
+            <div class="mb-3">
+                <label for="nombreProducto" class="form-label">Producto</label>
+                <input type="text" class="form-control" id="nombreProducto" placeholder="Ingresa el nombre del producto">
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" placeholder="Ingresa la descripción del producto"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio del producto">
+            </div>
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="date" class="form-control" id="fecha">
+            </div>
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen</label>
+                <input type="file" class="form-control" id="imagen">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="agregarFila()">Agregar</button>
+        </form>
+    </div>
+
+    <div class="container mt-3">
+        <h2>Tabla de Productos</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Editar</th>
+                    <th>Nombre del Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Fecha</th>
+                    <th>Imagen</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody id="tablaProductos">
+                
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombreProductoEditar" class="form-label">Nombre del Producto</label>
+                            <input type="text" class="form-control" id="nombreProductoEditar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionEditar" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcionEditar"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precioEditar" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precioEditar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaEditar" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fechaEditar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagenEditar" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="imagenEditar">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        var filaId = 1; // Identificador de fila inicial
+        var productosExistentes = {}; // Objeto para almacenar productos existentes
+        
+        function agregarFila() {
+            // Obtener los valores del formulario
+            var nombreProducto = document.getElementById("nombreProducto").value;
+            var descripcion = document.getElementById("descripcion").value;
+            var precio = document.getElementById("precio").value;
+            var fecha = document.getElementById("fecha").value;
+            var imagen = document.getElementById("imagen").value; // Aquí puedes manejar el archivo de imagen como desees
+
+            // Validar si ambos campos están llenos
+            if (nombreProducto === "" || descripcion === "" || precio === "" || fecha === "") {
+                alert("Por favor, completa todos los campos para agregar el producto.");
+                return;
+            }
+
+            // Validar si el producto ya existe
+            if (productosExistentes[nombreProducto]) {
+                alert("El producto ya existe.");
+                return;
+            }
+
+            // Crear una nueva fila en la tabla
+            var tabla = document.getElementById("tablaProductos");
+            var fila = tabla.insertRow();
+
+            // Asignar un identificador único a la fila
+            fila.setAttribute("id", "fila" + filaId);
+
+            // Agregar celdas a la fila
+            var cellEditar = fila.insertCell(0);
+            var cellNombreProducto = fila.insertCell(1);
+            var cellDescripcion = fila.insertCell(2);
+            var cellPrecio = fila.insertCell(3);
+            var cellFecha = fila.insertCell(4);
+            var cellImagen = fila.insertCell(5);
+            var cellBorrar = fila.insertCell(6);
+
+            // Agregar botones de editar y eliminar en la fila
+            cellEditar.innerHTML = '<button class="btn btn-warning" onclick="editarFila(' + filaId + ')">Editar</button>';
+            cellNombreProducto.innerHTML = nombreProducto;
+            cellDescripcion.innerHTML = descripcion;
+            cellPrecio.innerHTML = precio;
+            cellFecha.innerHTML = fecha;
+            cellImagen.innerHTML = '<img src="' + imagen + '" alt="Imagen del producto">';
+            cellBorrar.innerHTML = '<button class="btn btn-danger" onclick="eliminarFila(' + filaId + ')">Borrar</button>';
+
+            // Incrementar el identificador de fila
+            filaId++;
+
+            // Agregar el producto a la lista de productos existentes
+            productosExistentes[nombreProducto] = true;
+
+            // Limpiar los campos del formulario
+            document.getElementById("nombreProducto").value = "";
+            document.getElementById("descripcion").value = "";
+            document.getElementById("precio").value = "";
+            document.getElementById("fecha").value = "";
+            document.getElementById("imagen").value = "";
+        }
+
+        function editarFila(id) {
+            // Obtener la fila por su identificador
+            var fila = document.getElementById("fila" + id);
+
+            // Obtener los valores de la fila
+            var nombreProducto = fila.cells[1].innerHTML;
+            var descripcion = fila.cells[2].innerHTML;
+            var precio = fila.cells[3].innerHTML;
+            var fecha = fila.cells[4].innerHTML;
+            var imagen = fila.cells[5].innerHTML; // Aquí puedes manejar la imagen como desees
+
+            // Llenar el modal de edición con los valores de la fila
+            document.getElementById("nombreProductoEditar").value = nombreProducto;
+            document.getElementById("descripcionEditar").value = descripcion;
+            document.getElementById("precioEditar").value = precio;
+            document.getElementById("fechaEditar").value = fecha;
+            // Puedes manejar la imagen de manera diferente, como cargar la imagen actual o permitir cargar una nueva
+
+            // Establecer el atributo data-fila-id en el modal
+            document.getElementById("editarModal").setAttribute("data-fila-id", id);
+
+            // Mostrar el modal de edición
+            var editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
+            editarModal.show();
+        }
+
+        function guardarEdicion() {
+            // Obtener los valores editados desde el modal
+            var nombreProductoEditar = document.getElementById("nombreProductoEditar").value;
+            var descripcionEditar = document.getElementById("descripcionEditar").value;
+            var precioEditar = document.getElementById("precioEditar").value;
+            var fechaEditar = document.getElementById("fechaEditar").value;
+            // Puedes manejar la imagen editada de manera diferente, como cargar la imagen actual o permitir cargar una nueva
+
+            // Obtener el data-fila-id del modal
+            var filaId = document.getElementById("editarModal").getAttribute("data-fila-id");
+
+            // Actualizar los valores en la fila original
+            var fila = document.getElementById("fila" + filaId);
+            fila.cells[1].innerHTML = nombreProductoEditar;
+            fila.cells[2].innerHTML = descripcionEditar;
+            fila.cells[3].innerHTML = precioEditar;
+            fila.cells[4].innerHTML = fechaEditar;
+            // Puedes manejar la imagen actualizada de manera diferente
+
+            // Cerrar el modal de edición
+            var editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
+            editarModal.hide();
+        }
+
+        function eliminarFila(id) {
+            // Obtener la fila por su identificador
+            var fila = document.getElementById("fila" + id);
+
+            // Obtener el nombre del producto en la fila
+            var nombreProducto = fila.cells[1].innerHTML;
+
+            // Eliminar la fila de la tabla
+            fila.parentNode.removeChild(fila);
+
+            // Eliminar el producto de la lista de productos existentes
+            delete productosExistentes[nombreProducto];
+        }
+    </script>
+</body>
+</html>
